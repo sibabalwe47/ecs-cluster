@@ -1,4 +1,4 @@
-name: VPC Endpoint
+name: ECS Cluster
 on: [push]
 
 permissions:
