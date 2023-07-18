@@ -1,7 +1,10 @@
 /* ECS Cluster */
 resource "aws_ecs_cluster" "this" {
   name = var.name
-
+  setting {
+    name  = "${var.name}-container-insights"
+    value = var.enable_container_insights ? "enabled" : "disabled"
+  }
   configuration {
 
     execute_command_configuration {
@@ -16,10 +19,7 @@ resource "aws_ecs_cluster" "this" {
 
       }
 
-      setting {
-        name  = "${var.name}-container-insights"
-        value = var.enable_container_insights ? "enabled" : "disabled"
-      }
+
 
     }
   }
