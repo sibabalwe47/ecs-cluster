@@ -1,0 +1,154 @@
+name: VPC module build, test and deploy pipeline.
+on: [push]
+permissions:
+  contents: read
+jobs:
+  terraform_init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.9
+          terraform_wrapper: false
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Save script artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: module
+          path: ./*
+          retention-days: 1
+
+  terraform_plan:
+    runs-on: ubuntu-latest
+    needs: terraform_init
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.9
+          terraform_wrapper: false
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform artifacts from terraform_init
+        uses: actions/download-artifact@v3
+
+      - name: Terraform plan
+        working-directory: /home/runner/work/vpc/vpc/module
+        run: |
+          chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
+          terraform plan -var-file="values.tfvars"
+
+  terraform_cost:
+    runs-on: ubuntu-latest
+    needs: terraform_init
+    steps:
+      - name: Download module artifacts from previous jobs
+        uses: actions/download-artifact@v3
+        with:
+          name: module
+
+      - name: Infracost installation and authentification
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+          infracost --version
+          infracost configure set api_key ${{ secrets.INFRACOST_API_KEY }}
+          infracost breakdown --path .
+
+  terraform_test:
+    runs-on: ubuntu-latest
+    needs: [terraform_plan, terraform_cost]
+    steps:
+      - name: Run module test
+        uses: actions/download-artifact@v3
+        with:
+          name: module
+      - name: Pending....
+        run: echo "Required knowledge of GoLand and Terratest."
+
+      - name: Save script artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: module
+          path: /home/runner/work/vpc/vpc/module/*
+          retention-days: 1
+
+  terraform_apply:
+    runs-on: ubuntu-latest
+    needs: terraform_test
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.9
+          terraform_wrapper: false
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform artifacts from terraform_plan
+        uses: actions/download-artifact@v3
+
+      - name: Terraform apply
+        working-directory: /home/runner/work/vpc/vpc/module
+        run: |
+          chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
+          terraform apply --auto-approve -var-file="values.tfvars"
+
+      - name: Save script artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: module
+          path: /home/runner/work/vpc/vpc/module/*
+          retention-days: 1
+
+  terraform_destroy:
+    runs-on: ubuntu-latest
+    needs: terraform_apply
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.9
+          terraform_wrapper: false
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform artifacts from terraform_plan
+        uses: actions/download-artifact@v3
+
+      - name: Terraform apply
+        working-directory: /home/runner/work/vpc/vpc/module
+        run: |
+          chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
+          terraform destroy --auto-approve -var-file="values.tfvars"
+
+  terraform_versioninig:
+    runs-on: ubuntu-latest
+    needs: terraform_destroy
+    steps:
+      - name: Download module artifacts from previous jobs
+        uses: actions/download-artifact@v3
+        with:
+          name: module
+
+      - name: Terraform module tagging and versioning
+        run: git --version
