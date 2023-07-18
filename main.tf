@@ -26,5 +26,5 @@ resource "aws_cloudwatch_log_group" "this" {
 
 resource "aws_kms_key" "this" {
   count                   = var.enable_encryption == true ? 1 : 0
-  deletion_window_in_days = 365
+  deletion_window_in_days = 30
 }
