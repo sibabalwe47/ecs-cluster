@@ -104,7 +104,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Terraform apply
-        working-directory: ${{ secrets.WORKING_DIR }}/module
+        working-directory: /home/runner/work/ecs-cluster/ecs-cluster/module
         run: |
           chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
           terraform apply --auto-approve -var-file="values.tfvars"
@@ -131,7 +131,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Terraform destroy
-        working-directory: ${{ secrets.WORKING_DIR }}/module
+        working-directory: /home/runner/work/ecs-cluster/ecs-cluster/module
         run: |
           chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
           terraform destroy --auto-approve -var-file="values.tfvars"
