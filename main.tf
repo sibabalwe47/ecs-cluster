@@ -5,13 +5,13 @@ resource "aws_ecs_cluster" "this" {
   configuration {
 
     execute_command_configuration {
-      kms_key_id = var.enable_encryption == true ? aws_kms_key.this.arn : null
+      kms_key_id = var.enable_encryption == true ? aws_kms_key[0].this.arn : null
       logging    = "OVERRIDE"
       dynamic "log_configuration" {
         for_each = var.enable_logs == true ? [1] : []
         content {
           cloud_watch_encryption_enabled = true
-          cloud_watch_log_group_name     = aws_cloudwatch_log_group.this.name
+          cloud_watch_log_group_name     = aws_cloudwatch_log_group[0].this.name
         }
       }
     }
