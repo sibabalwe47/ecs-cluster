@@ -1,4 +1,5 @@
 
-name = "ecs-test"
-enable_logs = true
-enable_encryption = true
+name                      = "ecs-test"
+enable_logs               = true
+enable_encryption         = true
+enable_container_insights = true
