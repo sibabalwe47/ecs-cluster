@@ -2,11 +2,10 @@
 resource "aws_ecs_cluster" "this" {
   name = var.name
   setting {
-    name  = "${var.name}-container-insights"
+    name  = "containerInsights"
     value = var.enable_container_insights ? "enabled" : "disabled"
   }
   configuration {
-
     execute_command_configuration {
       kms_key_id = var.enable_encryption == true ? aws_kms_key.this[0].arn : null
       logging    = "OVERRIDE"
@@ -16,11 +15,7 @@ resource "aws_ecs_cluster" "this" {
           cloud_watch_encryption_enabled = true
           cloud_watch_log_group_name     = aws_cloudwatch_log_group.this[0].name
         }
-
       }
-
-
-
     }
   }
 }
