@@ -9,8 +9,8 @@ resource "aws_ecs_task_definition" "this" {
     cpu                = each.value.task_definition.cpu
     memory             = each.value.task_definition.memory
     essential          = true
-    portMappings       = jsonencode(each.value.task_definition.portMappings[0])
-    environments       = jsonencode(each.value.task_definition.environment[0])
+    portMappings       = jsonencode(each.value.task_definition.portMappings)
+    environments       = jsonencode(each.value.task_definition.environment)
     log_options_name   = each.value.task_definition.log_options.logs_group
     log_options_region = each.value.task_definition.log_options.region
   })
