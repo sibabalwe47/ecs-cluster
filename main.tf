@@ -12,7 +12,7 @@ resource "aws_ecs_cluster" "this" {
       dynamic "log_configuration" {
         for_each = var.enable_logs == true ? [1] : []
         content {
-          cloud_watch_encryption_enabled = true
+          cloud_watch_encryption_enabled = var.enable_encryption == true ? true : false
           cloud_watch_log_group_name     = aws_cloudwatch_log_group.this[0].name
         }
       }
