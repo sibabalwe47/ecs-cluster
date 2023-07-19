@@ -14,8 +14,8 @@ task_definitions = [
       memory = 512
       portMappings = [
         {
-          "containerPort" = "5500"
-          "hostPort"      = "5500"
+          "containerPort" = 5500
+          "hostPort"      = 5500
         }
       ]
       environment = [
