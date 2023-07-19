@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: module
-          path: vpc-peering/vpc-peering/module/*
+          path: ecs-cluster/ecs-cluster/module/*
           retention-days: 1
 
   terraform_destroy:
