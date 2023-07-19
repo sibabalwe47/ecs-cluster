@@ -8,7 +8,7 @@ resource "aws_ecs_cluster" "this" {
   configuration {
     execute_command_configuration {
       kms_key_id = var.enable_encryption == true ? aws_kms_key.this[0].arn : null
-      logging    = "OVERRIDE"
+      logging    = var.enable_logs == true ? "OVERRIDE" : "DEFAULT"
       dynamic "log_configuration" {
         for_each = var.enable_logs == true ? [1] : []
         content {
