@@ -2,8 +2,8 @@
   {
     "name": ${name},
     "image": ${image},
-    "cpu": ${hostPort},
-    "memory": ${cpu},
+    "cpu": ${cpu},
+    "memory": ${memory},
     "essential": ${essential},
     "portMappings": ${portMappings},
     "environment": ${environment},
