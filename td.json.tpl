@@ -5,8 +5,7 @@
     "cpu": ${cpu},
     "memory": ${memory},
     "essential": ${essential},
-    "portMappings": ${jsonencode(portMappings)},
-    "environment": ${jsonencode(environment)},
+    
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
