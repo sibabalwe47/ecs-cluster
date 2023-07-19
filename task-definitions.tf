@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "this" {
   family                   = each.value.family
   requires_compatibilities = [var.runtime]
   network_mode             = var.runtime == "FARGATE" ? "awsvpc" : "brigde"
-  container_definitions = templatefile("./taskdefinition.json.tpl", {
+  container_definitions = templatefile("./td.json.tpl", {
     name         = each.value.task_definition.name
     image        = each.value.task_definition.image
     cpu          = each.value.task_definition.cpu
