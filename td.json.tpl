@@ -6,7 +6,7 @@
     "memory": ${memory},
     "essential": ${essential},
     "portMappings": ${portMappings}
-    "environment": ${environment},
+    "environment": ${environments},
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
