@@ -10,8 +10,8 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/${name}",
-        "awslogs-region": "${log_options.region}",
+        "awslogs-group": "/ecs/${log_options_name}",
+        "awslogs-region": "${log_options_region}",
         "awslogs-stream-prefix": "ecs"
       }
     }
