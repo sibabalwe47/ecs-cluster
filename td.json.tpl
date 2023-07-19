@@ -1,9 +1,9 @@
 [
   {
-    "name": "kia-dms-staging",
-    "image": "156812865190.dkr.ecr.af-south-1.amazonaws.com/staging-dms:latest",
-    "cpu": 0,
-    "memory": 1024,
+    "name": "${name}",
+    "image": "${image}",
+    "cpu": ${cpu},
+    "memory": ${memory},
     "essential": true,
     "portMappings": [
       {
