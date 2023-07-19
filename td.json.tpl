@@ -4,7 +4,7 @@
     "image": "${image}",
     "cpu": ${cpu},
     "memory": ${memory},
-    "essential": true,
+    "essential": ${essential},
     "portMappings": [
       {
         "name": "kia-dms-staging-3000-tcp",
@@ -30,8 +30,8 @@
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/kia-dms-staging",
-        "awslogs-region": "af-south-1",
+        "awslogs-group": "/ecs/${log_options_name}",
+        "awslogs-region": "${log_options_region}",
         "awslogs-stream-prefix": "ecs"
       }
     }
