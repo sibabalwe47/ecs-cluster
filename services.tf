@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "this" {
-  for_each      = { for index, service in var.services : task.name => service }
+  for_each      = { for index, service in var.services : service.name => service }
   name          = each.value.name
   cluster       = each.value.cluster_id
   desired_count = each.value.desired_count
