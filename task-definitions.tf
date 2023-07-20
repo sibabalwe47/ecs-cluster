@@ -23,6 +23,12 @@ resource "aws_ecs_task_definition" "this" {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
   }
+
+  # dynamic "volume" {
+  #   content {
+  #     name = "${var.name}-"
+  #   }
+  # }
 }
 
 resource "aws_cloudwatch_log_group" "task_log_group" {
