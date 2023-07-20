@@ -45,9 +45,9 @@ variable "task_definitions" {
 
 variable "services" {
   type = list(object({
-    task_definition_index = number
-    name                  = string
-    cluster_id            = string
-    desired_count         = number
+    task_definition_family = string
+    name                   = string
+    cluster_id             = string
+    desired_count          = number
   }))
 }
