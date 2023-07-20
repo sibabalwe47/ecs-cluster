@@ -58,7 +58,7 @@ task_definitions = [
         }
       ]
       log_options = {
-        logs_group = "test"
+        logs_group = "ts-1"
         region     = "us-east-1"
       }
     }
