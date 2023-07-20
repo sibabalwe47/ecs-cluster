@@ -47,7 +47,6 @@ variable "services" {
   type = list(object({
     task_definition_family = string
     name                   = string
-    cluster_id             = string
     desired_count          = number
   }))
 }
