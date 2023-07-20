@@ -4,5 +4,5 @@ resource "aws_ecs_service" "this" {
   cluster         = each.value.cluster_id
   desired_count   = each.value.desired_count
   launch_type     = var.runtime == "FARGATE" ? "FARGATE" : "EC2"
-  task_definition = aws_ecs_task_definition.this[each.value.task_definition_index].arn
+  task_definition = aws_ecs_task_definition.this[each.value.task_definition_family].arn
 }
