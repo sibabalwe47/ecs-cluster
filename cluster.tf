@@ -22,7 +22,7 @@ resource "aws_ecs_cluster" "this" {
 
 resource "aws_cloudwatch_log_group" "this" {
   count = var.enable_logs == true ? 1 : 0
-  name  = "${var.name}-logs"
+  name  = "/ecs/${var.name}"
 }
 
 
