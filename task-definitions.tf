@@ -18,4 +18,9 @@ resource "aws_ecs_task_definition" "this" {
     log_options_name   = each.value.task_definition.log_options.logs_group
     log_options_region = each.value.task_definition.log_options.region
   })
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "X86_64"
+  }
 }
