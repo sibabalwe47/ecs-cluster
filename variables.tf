@@ -7,7 +7,6 @@ variable "runtime" {
   type = string
 }
 
-
 variable "enable_logs" {
   type = bool
 }

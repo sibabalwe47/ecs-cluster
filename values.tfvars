@@ -40,7 +40,7 @@ services = [
   {
     task_definition_index = 0
     name                  = "service-main-test"
-    cluster_id            = local.cluster_id
+    cluster_id            = "local.cluster_id"
     desired_count         = 1
   }
 ]
