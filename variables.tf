@@ -48,5 +48,9 @@ variable "services" {
     task_definition_family = string
     name                   = string
     desired_count          = number
+    network_configuration = object({
+      subnets = list(string)
+      security_groups = list(string)
+    })
   }))
 }

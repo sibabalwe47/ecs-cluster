@@ -41,5 +41,9 @@ services = [
     task_definition_family = "task-definition-test"
     name                   = "service-main-test"
     desired_count          = 1
+    network_configuration = {
+      subnets         = ["subnet-049c863f3f16d2342"]
+      security_groups = ["sg-0b9d22845128875ce"]
+    }
   }
 ]
