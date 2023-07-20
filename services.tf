@@ -5,4 +5,14 @@ resource "aws_ecs_service" "this" {
   desired_count   = each.value.desired_count
   launch_type     = var.runtime == "FARGATE" ? "FARGATE" : "EC2"
   task_definition = aws_ecs_task_definition.this[each.value.task_definition_family].arn
+
+  # network configuration
+  dynamic "network_configuration" {
+    for_each = var.runtime == "FARGATE" ? [1] : []
+    content {
+      subnets          = var.runtime == "FARGATE" ? [] : null
+      security_group   = var.runtime == "FARGATE" ? [] : null
+      assign_public_ip = true
+    }
+  }
 }

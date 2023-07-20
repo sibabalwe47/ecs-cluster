@@ -48,5 +48,6 @@ variable "services" {
     task_definition_family = string
     name                   = string
     desired_count          = number
+    assign_public_ip       = bool
   }))
 }
