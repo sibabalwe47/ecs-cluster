@@ -10,8 +10,8 @@ resource "aws_ecs_service" "this" {
   dynamic "network_configuration" {
     for_each = var.runtime == "FARGATE" ? [1] : []
     content {
-      subnets          = each.value.network_configuration.subnets
-      security_groups  = each.value.network_configuration.security_groups
+      subnets          = var.subnets
+      security_groups  = var.security_groups
       assign_public_ip = true
     }
   }
