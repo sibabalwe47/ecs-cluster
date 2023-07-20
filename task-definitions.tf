@@ -4,7 +4,7 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = [var.runtime]
   network_mode             = var.runtime == "FARGATE" ? "awsvpc" : "brigde"
   task_role_arn            = var.runtime == "FARGATE" ? "${data.aws_iam_role.ecs_task_execution_role.arn}" : null
-
+  execution_role_arn       = var.runtime == "FARGATE" ? "${data.aws_iam_role.ecs_task_execution_role.arn}" : null
   container_definitions = templatefile("./td.json.tpl", {
     name               = each.value.task_definition.name
     image              = each.value.task_definition.image
