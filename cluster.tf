@@ -30,3 +30,16 @@ resource "aws_kms_key" "this" {
   count                   = var.enable_encryption == true ? 1 : 0
   deletion_window_in_days = 30
 }
+
+resource "aws_ecs_cluster_capacity_providers" "example" {
+  count        = var.runtime == "FARGATE" ? 1 : 0
+  cluster_name = aws_ecs_cluster.this.name
+
+  capacity_providers = ["FARGATE"]
+
+  default_capacity_provider_strategy {
+    base              = 1
+    weight            = 100
+    capacity_provider = "FARGATE"
+  }
+}
