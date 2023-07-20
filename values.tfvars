@@ -40,7 +40,6 @@ services = [
   {
     task_definition_family = "task-definition-test"
     name                   = "service-main-test"
-    cluster_id             = "local.cluster_id"
     desired_count          = 1
   }
 ]
