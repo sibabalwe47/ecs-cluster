@@ -10,7 +10,7 @@ task_definitions = [
     task_definition = {
       name   = "task-definition-test-image"
       image  = "siba920429/todo-service-image"
-      cpu    = 1
+      cpu    = 256
       memory = 512
       portMappings = [
         {
