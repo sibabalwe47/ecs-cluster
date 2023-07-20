@@ -116,34 +116,34 @@ jobs:
           path: ecs-cluster/ecs-cluster/module/*
           retention-days: 1
 
-  terraform_destroy:
-    runs-on: ubuntu-latest
-    needs: terraform_apply
-    steps:
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.1.9
-          terraform_wrapper: false
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+  # terraform_destroy:
+  #   runs-on: ubuntu-latest
+  #   needs: terraform_apply
+  #   steps:
+  #     - name: Setup Terraform
+  #       uses: hashicorp/setup-terraform@v2
+  #       with:
+  #         terraform_version: 1.1.9
+  #         terraform_wrapper: false
+  #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Terraform artifacts from terraform_plan
-        uses: actions/download-artifact@v3
+  #     - name: Terraform artifacts from terraform_plan
+  #       uses: actions/download-artifact@v3
 
-      - name: Terraform destroy
-        working-directory: /home/runner/work/ecs-cluster/ecs-cluster/module
-        run: |
-          chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
-          terraform destroy --auto-approve -var-file="values.tfvars"
+  #     - name: Terraform destroy
+  #       working-directory: /home/runner/work/ecs-cluster/ecs-cluster/module
+  #       run: |
+  #         chmod +x .terraform/providers/registry.terraform.io/hashicorp/aws/5.7.0/linux_amd64/terraform-provider-aws_v5.7.0_x5
+  #         terraform destroy --auto-approve -var-file="values.tfvars"
 
-  terraform_versioninig:
-    runs-on: ubuntu-latest
-    needs: terraform_destroy
-    steps:
-      - name: Download module artifacts from previous jobs
-        uses: actions/download-artifact@v3
-        with:
-          name: module
+  # terraform_versioninig:
+  #   runs-on: ubuntu-latest
+  #   needs: terraform_destroy
+  #   steps:
+  #     - name: Download module artifacts from previous jobs
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: module
 
-      - name: Terraform module tagging and versioning
-        run: git --version
+  #     - name: Terraform module tagging and versioning
+  #       run: git --version
