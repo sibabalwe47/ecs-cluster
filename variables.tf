@@ -29,8 +29,8 @@ variable "task_definitions" {
       cpu    = number
       memory = number
       portMappings = list(object({
-        containerPort = string
-        hostPort      = string
+        containerPort = number
+        hostPort      = number
       }))
       environment = list(object({
         name  = string
