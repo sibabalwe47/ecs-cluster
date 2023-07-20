@@ -25,7 +25,7 @@ resource "aws_ecs_task_definition" "this" {
   }
 }
 
-resource "aws_cloudwatch_log_group" "this" {
+resource "aws_cloudwatch_log_group" "task_log_group" {
   for_each = { for index, task in var.task_definitions : task.family => task }
   name     = "/ecs/${each.value.task_definition.log_options.logs_group}"
 }
