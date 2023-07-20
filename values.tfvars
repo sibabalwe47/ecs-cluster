@@ -18,8 +18,8 @@ task_definitions = [
           "hostPort"      = 5500
         },
         {
-          "containerPort" = 5500
-          "hostPort"      = 5500
+          "containerPort" = 80
+          "hostPort"      = 80
         }
       ]
       environment = [
