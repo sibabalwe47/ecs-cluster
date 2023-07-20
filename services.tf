@@ -11,7 +11,7 @@ resource "aws_ecs_service" "this" {
     for_each = var.runtime == "FARGATE" ? [1] : []
     content {
       subnets          = var.runtime == "FARGATE" ? [] : null
-      security_group   = var.runtime == "FARGATE" ? [] : null
+      security_groups  = var.runtime == "FARGATE" ? [] : null
       assign_public_ip = true
     }
   }
