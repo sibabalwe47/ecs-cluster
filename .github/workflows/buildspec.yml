@@ -146,4 +146,10 @@ jobs:
           name: module
 
       - name: Terraform module tagging and versioning
-        run: git --version
+        run: |
+          git --version
+          mkdir repo
+          cd repo
+          git clone https://github.com/kloudspacewithsiba/versioning.git
+          git add /home/runner/work/ecs-cluster/ecs-cluster/module
+          git tag -a "0.0.1" -m "automated versioning build"
