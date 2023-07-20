@@ -3,6 +3,13 @@ variable "name" {
   type = string
 }
 
+variable "subnets" {
+  type = list(string)
+}
+
+variable "security_groups" {
+  type = list(string)
+}
 variable "runtime" {
   type = string
 }
@@ -49,7 +56,7 @@ variable "services" {
     name                   = string
     desired_count          = number
     network_configuration = object({
-      subnets = list(string)
+      subnets         = list(string)
       security_groups = list(string)
     })
   }))

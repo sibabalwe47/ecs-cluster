@@ -4,6 +4,8 @@ enable_logs               = true
 enable_encryption         = true
 enable_container_insights = true
 runtime                   = "FARGATE"
+subnets                   = ["subnet-049c863f3f16d2342"]
+security_groups           = ["sg-0b9d22845128875ce"]
 task_definitions = [
   {
     family = "task-definition-test"
@@ -70,18 +72,10 @@ services = [
     task_definition_family = "task-definition-test"
     name                   = "service-1"
     desired_count          = 1
-    network_configuration = {
-      subnets         = ["subnet-049c863f3f16d2342"]
-      security_groups = ["sg-0b9d22845128875ce"]
-    }
   },
   {
     task_definition_family = "ts-1"
     name                   = "service-2"
     desired_count          = 1
-    network_configuration = {
-      subnets         = ["subnet-049c863f3f16d2342"]
-      security_groups = ["sg-0b9d22845128875ce"]
-    }
   }
 ]
