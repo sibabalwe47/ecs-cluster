@@ -57,3 +57,7 @@ variable "services" {
     desired_count          = number
   }))
 }
+
+variable "ecr_repositories" {
+  type = list(string)
+}

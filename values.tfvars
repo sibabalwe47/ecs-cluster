@@ -6,6 +6,7 @@ enable_container_insights = true
 runtime                   = "FARGATE"
 subnets                   = ["subnet-049c863f3f16d2342"]
 security_groups           = ["sg-0b9d22845128875ce"]
+ecr_repositories          = ["test"]
 task_definitions = [
   {
     family = "task-definition-test"
